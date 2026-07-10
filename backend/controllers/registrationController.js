@@ -133,9 +133,22 @@ export const scanTicket = async (req, res) => {
     await registration.save();
 
     // Increment event checked-in count
-    event.currentCount += 1;
-    await event.save();
-    console.log("Registration Data:");
+    // Increment event checked-in count
+event.currentCount += 1;
+
+console.log("BEFORE SAVE =", event.currentCount);
+
+await event.save();
+
+const updatedEvent = await Event.findById(event._id);
+
+console.log("AFTER SAVE =", updatedEvent.currentCount);
+
+console.log("Registration Data:");
+console.log(registration);
+console.log("User:", registration.user);
+console.log("Attendee Name:", registration.attendeeName);
+console.log("Attendee Email:", registration.attendeeEmail);
 console.log(registration);
 console.log("User:", registration.user);
 console.log("Attendee Name:", registration.attendeeName);

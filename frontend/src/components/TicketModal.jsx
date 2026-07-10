@@ -10,27 +10,22 @@ const TicketModal = ({ registration, onClose }) => {
   const userPhone = registration.attendeePhone || '';
 
   useEffect(() => {
-    if (ticketCode) {
-      const qrData = JSON.stringify({
-  ticketCode,
-  name: userName,
-  email: userEmail,
-  event: event.title
-});
+  if (ticketCode) {
 
-QRCode.toDataURL(qrData, {
-  width: 180,
-  margin: 1,
-  color: {
-    dark: '#000000',
-    light: '#FFFFFF',
-  },
-})
-        .then((url) => setQrUrl(url))
-        .catch((err) => console.error('QR code generation failed:', err));
-    }
-  }, [ticketCode]);
+    const qrData = `http://10.68.23.223:5000/checkin/${ticketCode}`;
 
+    QRCode.toDataURL(qrData, {
+      width: 180,
+      margin: 1,
+      color: {
+        dark: '#000000',
+        light: '#FFFFFF',
+      },
+    })
+      .then((url) => setQrUrl(url))
+      .catch((err) => console.error('QR code generation failed:', err));
+  }
+}, [ticketCode]);
   const formatDate = (dateString) => {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
